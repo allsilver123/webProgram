@@ -57,7 +57,7 @@
             <div class="main-menu-wrap">
               <!-- logo -->
               <div class="site-logo">
-                <a href="index.html">
+                <a href="index.php">
                   <img src="assets/img/logo.png" alt="" />
                 </a>
               </div>
@@ -67,15 +67,15 @@
               <nav class="main-menu">
                 <ul>
                   <li class="current-list-item">
-                    <a href="index.html">소개</a>
+                    <a href="index.php">소개</a>
                   </li>
                   <li><a href="news.html">프로모션</a></li>
                   <li>
-                    <a href="shop.html">쇼핑</a>
+                    <a href="shopMain.php">쇼핑</a>
                     <ul class="sub-menu">
-                      <li><a href="shop.html">쇼핑</a></li>
+                      <li><a href="shopMain.php">쇼핑</a></li>
                       <li><a href="checkout.html">Check Out</a></li>
-                      <li><a href="single-product.html">Single Product</a></li>
+                      <li><a href="productDetail.php">Single Product</a></li>
                       <li><a href="cart.html">장바구니</a></li>
                     </ul>
                   </li>
@@ -169,7 +169,7 @@
                     정확한 영양성분과 칼로리 계산을<br />쉽고 빠르게 해결하세요
                   </h1>
                   <div class="hero-btns">
-                    <a href="shop.html" class="boxed-btn">지금 계산하기</a>
+                    <a href="shopMain.php" class="boxed-btn">지금 계산하기</a>
                   </div>
                 </div>
               </div>
@@ -201,11 +201,11 @@
           <div class="col-lg-7">
             <div class="featured-text">
               <h2 class="pb-3">
-                왜 <span class="orange-text">칼로리와이즈인가?</span>
+                왜 <span class="orange-text">칼로리와이즈</span>일까요?
               </h2>
               <div class="row">
                 <div class="col-lg-6 col-md-6 mb-4 mb-md-5">
-                  <div class="list-box d-flex">
+                  <div class="list-boxd-flex">
                     <div class="list-icon">
                       <i class="fas fa-utensils"></i>
                     </div>
@@ -369,7 +369,7 @@
             <div class="footer-box pages">
               <h2 class="widget-title">페이지 목록</h2>
               <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Shop</a></li>
                 <li><a href="news.html">News</a></li>
@@ -391,7 +391,7 @@
             <div class="footer-box subscribe">
               <h2 class="widget-title">구독</h2>
               <p>구독을 하시면 칼로리와이즈의 다양한 최신 정보를 제공합니다</p>
-              <form action="index.html">
+              <form action="index.php">
                 <input type="email" placeholder="Email" />
                 <button type="submit">
                   <i class="fas fa-paper-plane"></i>
