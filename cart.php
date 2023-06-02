@@ -1,3 +1,47 @@
+<?php        
+// 데이터베이스 연결 설정
+$servername = "20.244.1.134:3306"; // 데이터베이스 서버 이름
+$username = "test"; // 데이터베이스 사용자 이름
+$password = "2007"; // 데이터베이스 비밀번호
+$dbname = "CalorieWise"; // 데이터베이스 이름
+
+$cart = isset($_COOKIE['cart']) ? unserialize($_COOKIE['cart']) : array();
+
+// 데이터베이스에 연결
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+// cart.php 파일에서 쿠키를 사용하여 정보 저장
+if(isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 'add') {
+  $productId = $_GET['id'];
+
+  // 새로운 상품 추가
+  $cart[] = $productId;
+
+  // 쿠키에 저장, 유효 시간 1시간 
+  setcookie('cart', serialize($cart), time() + (60 * 60), '/');
+}
+
+
+if(isset($_GET['action']))
+{
+  if($_GET['action']=='delete')
+  {
+    /*for( $i = 0 ; $i <= count($cart) ; $i++) {
+      if($cart[$i]==$_GET['id'])
+      {   
+          //세션에서 제거
+          unset($cart[$i]);
+          $cart = array_values($cart);
+          setcookie('cart', serialize($cart), time() + (60 * 60), '/');
+          echo '<script>alert("삭제 되었습니다")</script>';
+          echo '<script>window.location="cart.php"</script>';
+      }
+    } */
+  }
+}
+
+  
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -157,42 +201,58 @@
                     <th class="product-total">총 가격</th>
                   </tr>
                 </thead>
+                <!-- 장바구니 목록 -->
                 <tbody>
                   <!-- 추가한 상품 -->
-                  <tr class="table-body-row">
-                    <td class="product-remove">
-                      <a href="#"><i class="far fa-window-close"></i></a>
-                    </td>
-                    <td class="product-image">
-                      <img src="assets/img/products/product-img-1.jpg" alt="" />
-                    </td>
-                    <td class="product-name">Strawberry</td>
-                    <td class="product-price">$85</td>
-                    <td class="product-quantity">
-                      <input type="number" placeholder="0" />
-                    </td>
-                    <td class="product-total">1</td>
-                  </tr>
-                  <tr>
-                  <?php
-                    // cart.php 파일에서 쿠키를 사용하여 정보 저장
-                    if(isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 'add') {
-                      $productId = $_GET['id'];
+                  <?php          
 
-                      // 기존 쿠키 값을 가져오기
-                      $cart = isset($_COOKIE['cart']) ? unserialize($_COOKIE['cart']) : array();
-
-                      // 새로운 상품 추가
-                      $cart[] = $productId;
-
-                      // 쿠키에 저장, 유효 시간 1시간 
-                      setcookie('cart', serialize($cart), time() + (60 * 60), '/');
-                    }
+                      
+                      // 연결 확인
+                      if (!$conn) {
+                        die("데이터베이스 연결 실패: " . mysqli_connect_error());
+                      }
+                      
+                      $sql = "SELECT * FROM product WHERE id IN (". implode(",", $cart) .")";
+                      $result = mysqli_query($conn, $sql);
+                      
+                      // 가져온 결과 출력
+                      if ($result->num_rows > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                              echo $cart[0];
+                              echo $cart[0];
+                              echo $cart[0];
+                              $productId = $row["id"];
+                              $name = $row["name"];
+                              $price = $row["price"];
+                              $totalPrice = $price*2;
+                              echo '
+                              <tr class="table-body-row">
+                                <td class="product-remove">
+                                  <a href="cart.php?action=delete&id='.$productId.'"> 
+                                    <span class="text-danger">삭제</span> 
+                                  </a>
+                                </td>
+                                <td class="product-image">
+                                  <img src="assets/img/products/'.$name.'.jpg" alt="" />
+                                </td>
+                                <td class="product-name">'.$name.'</td>
+                                <td class="product-price">'.$price.'원</td>
+                                <td class="product-quantity">
+                                  <input type="number" placeholder="0" />
+                                </td>
+                                <td class="product-total">'.$totalPrice.'</td>
+                              </tr>';
+                          }
+                      } else {
+                          echo "결과가 없습니다.";
+                      }
+                      
+                      // 데이터베이스 연결 종료
+                      $conn->close();       
                   ?>
-
-                  </tr>
                   <!-- 추가한 상품 끝 -->
                 </tbody>
+                <!-- 장바구니 목록 끝 -->
               </table>
             </div>
           </div>
