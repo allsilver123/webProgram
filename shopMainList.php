@@ -28,7 +28,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 
   // 제품 정보를 HTML로 출력
   echo '
-  
   <div class="col-lg-4 col-md-6 text-center 카테고리">
     <div class="single-product-item">
       <div class="product-image">
@@ -36,10 +35,10 @@ while ($row = mysqli_fetch_assoc($result)) {
           ><img class="productImg" src="assets/img/products/'.$product_name.'.jpg" alt=""/></a>
       </div>
       <h3>'.$product_name.'</h3>
-      <p class="product-price"><span>'.$calories.' 칼로리 </span> '.$preice.'</p>
-      <a href="cart.html" class="cart-btn"
-        ><i class="fas fa-shopping-cart"></i> 장바구니에 담기</a
-      >
+      <p class="product-price"><span>'.$calories.' 칼로리 </span> '.$price.'</p>
+      <a href="cart.php?id='.$id.'&action=add" class="cart-btn">
+        <i class="fas fa-shopping-cart"></i> 장바구니에 담기
+      </a>
     </div>
   </div>
     ';

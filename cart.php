@@ -10,7 +10,7 @@
     />
 
     <!-- title -->
-    <title>Cart</title>
+    <title>장바구니</title>
 
     <!-- favicon -->
     <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png" />
@@ -67,47 +67,22 @@
               <nav class="main-menu">
                 <ul>
                   <li class="current-list-item">
-                    <a href="#">Home</a>
-                    <ul class="sub-menu">
-                      <li><a href="index.php">Static Home</a></li>
-                      <li><a href="index_2.html">Slider Home</a></li>
-                    </ul>
+                    <a href="index.php">소개</a>
                   </li>
-                  <li><a href="about.html">About</a></li>
+                  <li><a href="news.html">프로모션</a></li>
                   <li>
-                    <a href="#">Pages</a>
+                    <a href="shopMain.php">쇼핑</a>
                     <ul class="sub-menu">
-                      <li><a href="404.html">404 page</a></li>
-                      <li><a href="about.html">About</a></li>
-                      <li><a href="cart.html">Cart</a></li>
+                      <li><a href="shopMain.php">쇼핑</a></li>
                       <li><a href="checkout.html">Check Out</a></li>
-                      <li><a href="contact.html">Contact</a></li>
-                      <li><a href="news.html">News</a></li>
-                      <li><a href="shopMain.php">Shop</a></li>
+                      <li><a href="productDetail.php">Single Product</a></li>
+                      <li><a href="cart.php">장바구니</a></li>
                     </ul>
                   </li>
-                  <li>
-                    <a href="news.html">News</a>
-                    <ul class="sub-menu">
-                      <li><a href="news.html">News</a></li>
-                      <li><a href="single-news.html">Single News</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="contact.html">Contact</a></li>
-                  <li>
-                    <a href="shopMain.php">Shop</a>
-                    <ul class="sub-menu">
-                      <li><a href="shopMain.php">Shop</a></li>
-                      <li><a href="checkout.html">Check Out</a></li>
-                      <li>
-                        <a href="productDetail.php">Single Product</a>
-                      </li>
-                      <li><a href="cart.html">Cart</a></li>
-                    </ul>
-                  </li>
+                  <li><a href="contact.html">문의하기</a></li>
                   <li>
                     <div class="header-icons">
-                      <a class="shopping-cart" href="cart.html"
+                      <a class="shopping-cart" href="cart.php"
                         ><i class="fas fa-shopping-cart"></i
                       ></a>
                       <a class="mobile-hide search-bar-icon" href="#"
@@ -175,14 +150,15 @@
                 <thead class="cart-table-head">
                   <tr class="table-head-row">
                     <th class="product-remove"></th>
-                    <th class="product-image">Product Image</th>
-                    <th class="product-name">Name</th>
-                    <th class="product-price">Price</th>
-                    <th class="product-quantity">Quantity</th>
-                    <th class="product-total">Total</th>
+                    <th class="product-image">제품 사진</th>
+                    <th class="product-name">이름</th>
+                    <th class="product-price">가격</th>
+                    <th class="product-quantity">수량</th>
+                    <th class="product-total">총 가격</th>
                   </tr>
                 </thead>
                 <tbody>
+                  <!-- 추가한 상품 -->
                   <tr class="table-body-row">
                     <td class="product-remove">
                       <a href="#"><i class="far fa-window-close"></i></a>
@@ -197,39 +173,31 @@
                     </td>
                     <td class="product-total">1</td>
                   </tr>
-                  <tr class="table-body-row">
-                    <td class="product-remove">
-                      <a href="#"><i class="far fa-window-close"></i></a>
-                    </td>
-                    <td class="product-image">
-                      <img src="assets/img/products/product-img-2.jpg" alt="" />
-                    </td>
-                    <td class="product-name">Berry</td>
-                    <td class="product-price">$70</td>
-                    <td class="product-quantity">
-                      <input type="number" placeholder="0" />
-                    </td>
-                    <td class="product-total">1</td>
+                  <tr>
+                  <?php
+                    // cart.php 파일에서 쿠키를 사용하여 정보 저장
+                    if(isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 'add') {
+                      $productId = $_GET['id'];
+
+                      // 기존 쿠키 값을 가져오기
+                      $cart = isset($_COOKIE['cart']) ? unserialize($_COOKIE['cart']) : array();
+
+                      // 새로운 상품 추가
+                      $cart[] = $productId;
+
+                      // 쿠키에 저장, 유효 시간 1시간 
+                      setcookie('cart', serialize($cart), time() + (60 * 60), '/');
+                    }
+                  ?>
+
                   </tr>
-                  <tr class="table-body-row">
-                    <td class="product-remove">
-                      <a href="#"><i class="far fa-window-close"></i></a>
-                    </td>
-                    <td class="product-image">
-                      <img src="assets/img/products/product-img-3.jpg" alt="" />
-                    </td>
-                    <td class="product-name">Lemon</td>
-                    <td class="product-price">$35</td>
-                    <td class="product-quantity">
-                      <input type="number" placeholder="0" />
-                    </td>
-                    <td class="product-total">1</td>
-                  </tr>
+                  <!-- 추가한 상품 끝 -->
                 </tbody>
               </table>
             </div>
           </div>
 
+          <!-- 계산서 -->
           <div class="col-lg-4">
             <div class="total-section">
               <table class="total-table">
@@ -255,13 +223,13 @@
                 </tbody>
               </table>
               <div class="cart-buttons">
-                <a href="cart.html" class="boxed-btn">Update Cart</a>
+                <a href="cart.php" class="boxed-btn">Update Cart</a>
                 <a href="checkout.html" class="boxed-btn black">Check Out</a>
               </div>
             </div>
 
             <div class="coupon-section">
-              <h3>Apply Coupon</h3>
+              <h3>쿠폰 적용</h3>
               <div class="coupon-form-wrap">
                 <form action="index.php">
                   <p><input type="text" placeholder="Coupon" /></p>
@@ -270,66 +238,19 @@
               </div>
             </div>
           </div>
+          <!-- 계산서 끝 -->
         </div>
       </div>
     </div>
     <!-- end cart -->
 
-    <!-- logo carousel -->
-    <div class="logo-carousel-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="logo-carousel-inner">
-              <div class="single-logo-item">
-                <img src="assets/img/company-logos/1.png" alt="" />
-              </div>
-              <div class="single-logo-item">
-                <img src="assets/img/company-logos/2.png" alt="" />
-              </div>
-              <div class="single-logo-item">
-                <img src="assets/img/company-logos/3.png" alt="" />
-              </div>
-              <div class="single-logo-item">
-                <img src="assets/img/company-logos/4.png" alt="" />
-              </div>
-              <div class="single-logo-item">
-                <img src="assets/img/company-logos/5.png" alt="" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end logo carousel -->
-
     <!-- footer -->
     <div class="footer-area">
       <div class="container">
         <div class="row">
-          <div class="col-lg-3 col-md-6">
-            <div class="footer-box about-widget">
-              <h2 class="widget-title">About us</h2>
-              <p>
-                Ut enim ad minim veniam perspiciatis unde omnis iste natus error
-                sit voluptatem accusantium doloremque laudantium, totam rem
-                aperiam, eaque ipsa quae.
-              </p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <div class="footer-box get-in-touch">
-              <h2 class="widget-title">Get in Touch</h2>
-              <ul>
-                <li>34/8, East Hukupara, Gifirtok, Sadan.</li>
-                <li>support@fruitkha.com</li>
-                <li>+00 111 222 3333</li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6">
+          <div class="col-lg-4 col-md-6">
             <div class="footer-box pages">
-              <h2 class="widget-title">Pages</h2>
+              <h2 class="widget-title">페이지 목록</h2>
               <ul>
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.html">About</a></li>
@@ -339,10 +260,20 @@
               </ul>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6">
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-box get-in-touch">
+              <h2 class="widget-title">칼로리 와이즈</h2>
+              <ul>
+                <li>충청남도 천안시 동남구 병천면 충절로 1600</li>
+                <li>support@CalorieWise.com</li>
+                <li>041-560-1230</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
             <div class="footer-box subscribe">
-              <h2 class="widget-title">Subscribe</h2>
-              <p>Subscribe to our mailing list to get the latest updates.</p>
+              <h2 class="widget-title">구독</h2>
+              <p>구독을 하시면 칼로리와이즈의 다양한 최신 정보를 제공합니다</p>
               <form action="index.php">
                 <input type="email" placeholder="Email" />
                 <button type="submit">
@@ -355,51 +286,6 @@
       </div>
     </div>
     <!-- end footer -->
-
-    <!-- copyright -->
-    <div class="copyright">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 col-md-12">
-            <p>
-              Copyrights &copy; 2019 -
-              <a href="https://imransdesign.com/">Imran Hossain</a>, All Rights
-              Reserved.
-            </p>
-          </div>
-          <div class="col-lg-6 text-right col-md-12">
-            <div class="social-icons">
-              <ul>
-                <li>
-                  <a href="#" target="_blank"
-                    ><i class="fab fa-facebook-f"></i
-                  ></a>
-                </li>
-                <li>
-                  <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                </li>
-                <li>
-                  <a href="#" target="_blank"
-                    ><i class="fab fa-instagram"></i
-                  ></a>
-                </li>
-                <li>
-                  <a href="#" target="_blank"
-                    ><i class="fab fa-linkedin"></i
-                  ></a>
-                </li>
-                <li>
-                  <a href="#" target="_blank"
-                    ><i class="fab fa-dribbble"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end copyright -->
 
     <!-- jquery -->
     <script src="assets/js/jquery-1.11.3.min.js"></script>

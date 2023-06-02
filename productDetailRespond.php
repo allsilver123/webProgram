@@ -52,7 +52,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             <p class="single-product-pricing">' .$price .'원</p>
             <p>' .$description .'</p>
             <div class="single-product-form">
-              <a href="cart.html" class="cart-btn"
+              <a href="cart.php" class="cart-btn"
                 ><i class="fas fa-shopping-cart"></i> 장바구니에 담기</a
               >
             </div>

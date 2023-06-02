@@ -76,13 +76,13 @@
                       <li><a href="shopMain.php">쇼핑</a></li>
                       <li><a href="checkout.html">Check Out</a></li>
                       <li><a href="productDetail.php">Single Product</a></li>
-                      <li><a href="cart.html">장바구니</a></li>
+                      <li><a href="cart.php">장바구니</a></li>
                     </ul>
                   </li>
                   <li><a href="contact.html">문의하기</a></li>
                   <li>
                     <div class="header-icons">
-                      <a class="shopping-cart" href="cart.html"
+                      <a class="shopping-cart" href="cart.php"
                         ><i class="fas fa-shopping-cart"></i
                       ></a>
                       <a class="mobile-hide search-bar-icon" href="#"
