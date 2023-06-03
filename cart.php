@@ -51,7 +51,7 @@ if (isset($_POST['updateCart'])) {
   echo 'fdassssssssss';
   $changedProduct = $_POST['changedProduct'];
   $changedProductNum = $_POST['changedProductNum'];
-  $cart[$changedProduct] =array('quantity' => $changedProductNum);
+  $cart[$changedProduct]['quantity'] = $changedProductNum;
 
   // 쿠키에 저장, 유효 시간 1시간 
   setcookie('cart', serialize($cart), time() + (60 * 60), '/');
@@ -308,6 +308,8 @@ if(isset($_POST['reset_cart'])) {
                       <option value="'.$row['id'].'">'.$row['name'].'</option>
                       ';
                     }
+
+                    setcookie('cart', serialize($cart), time() + (60 * 60), '/');
                   ?>
                 </select>
                 <input name="changedProductNum" type="number" class="form-control" placeholder="수량" aria-label="1" aria-describedby="basic-addon1">
