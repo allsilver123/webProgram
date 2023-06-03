@@ -10,37 +10,63 @@ $cart = isset($_COOKIE['cart']) ? unserialize($_COOKIE['cart']) : array();
 // 데이터베이스에 연결
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-// cart.php 파일에서 쿠키를 사용하여 정보 저장
+
+// 장바구니 추가
 if(isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 'add') {
   $productId = $_GET['id'];
+  if(!isset($cart[$productId])) {
+  
+    $sql = "SELECT * FROM product WHERE id = $productId";
+    $result2 = mysqli_query($conn, $sql);
 
-  // 새로운 상품 추가
-  $cart[] = $productId;
+    while ($row = mysqli_fetch_assoc($result2)) {
+     $priceResult = $row['price'];
+     $productName = $row['name'];
+    }
+    $cart[$productId] = array('id' => $productId, 'quantity' => 1, 'price' => $priceResult, 'name' => $productName);
+     // 쿠키에 저장, 유효 시간 1시간 
 
-  // 쿠키에 저장, 유효 시간 1시간 
-  setcookie('cart', serialize($cart), time() + (60 * 60), '/');
+    setcookie('cart', serialize($cart), time() + (60 * 60), '/');
+  }
 }
 
-
+//장바구니 삭제
 if(isset($_GET['action']))
 {
   if($_GET['action']=='delete')
   {
-    /*for( $i = 0 ; $i <= count($cart) ; $i++) {
-      if($cart[$i]==$_GET['id'])
-      {   
-          //세션에서 제거
-          unset($cart[$i]);
-          $cart = array_values($cart);
-          setcookie('cart', serialize($cart), time() + (60 * 60), '/');
-          echo '<script>alert("삭제 되었습니다")</script>';
-          echo '<script>window.location="cart.php"</script>';
-      }
-    } */
-  }
+    if(isset($cart[$_GET['deleteId']]))
+    {   
+        unset($cart[$_GET['deleteId']]);
+        $cart = array_values($cart);
+        setcookie('cart', serialize($cart), time() + (60 * 60), '/');
+        echo '<script>alert("삭제 되었습니다")</script>';
+        echo '<script>window.location="cart.php"</script>';
+    }
+  } 
 }
 
-  
+//장바구니 업데이트
+if (isset($_POST['updateCart'])) {
+  echo 'fdassssssssss';
+  $changedProduct = $_POST['changedProduct'];
+  $changedProductNum = $_POST['changedProductNum'];
+  $cart[$changedProduct] =array('quantity' => $changedProductNum);
+
+  // 쿠키에 저장, 유효 시간 1시간 
+  setcookie('cart', serialize($cart), time() + (60 * 60), '/');
+
+  echo '<script>alert("장바구니가 업데이트되었습니다.")</script>';
+  echo '<script>window.location="cart.php"</script>';
+}
+
+//장바구니 초기화
+if(isset($_POST['reset_cart'])) {
+  $cart = null;
+  setcookie('cart', '', time() - 3600, '/');
+  echo '<script>alert("장바구니가 초기화되었습니다.")</script>';
+  echo '<script>window.location="cart.php"</script>';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -113,7 +139,7 @@ if(isset($_GET['action']))
                   <li class="current-list-item">
                     <a href="index.php">소개</a>
                   </li>
-                  <li><a href="news.html">프로모션</a></li>
+                  <li><a href="promotion.html">프로모션</a></li>
                   <li>
                     <a href="shopMain.php">쇼핑</a>
                     <ul class="sub-menu">
@@ -156,10 +182,10 @@ if(isset($_GET['action']))
             <span class="close-btn"><i class="fas fa-window-close"></i></span>
             <div class="search-bar">
               <div class="search-bar-tablecell">
-                <h3>Search For:</h3>
-                <input type="text" placeholder="Keywords" />
+                <h3>검색 :</h3>
+                <input type="text" placeholder="어떤 것을 원하시나요?" />
                 <button type="submit">
-                  Search <i class="fas fa-search"></i>
+                  검색 <i class="fas fa-search"></i>
                 </button>
               </div>
             </div>
@@ -167,7 +193,7 @@ if(isset($_GET['action']))
         </div>
       </div>
     </div>
-    <!-- end search arewa -->
+    <!-- end search area -->
 
     <!-- breadcrumb-section -->
     <div class="breadcrumb-section breadcrumb-bg">
@@ -175,8 +201,8 @@ if(isset($_GET['action']))
         <div class="row">
           <div class="col-lg-8 offset-lg-2 text-center">
             <div class="breadcrumb-text">
-              <p>Fresh and Organic</p>
-              <h1>Cart</h1>
+              <p>쉽고 간편하게</p>
+              <h1>장바구니</h1>
             </div>
           </div>
         </div>
@@ -203,51 +229,68 @@ if(isset($_GET['action']))
                 </thead>
                 <!-- 장바구니 목록 -->
                 <tbody>
+                <form method="post" action="cart.php">
                   <!-- 추가한 상품 -->
                   <?php          
-
-                      
                       // 연결 확인
                       if (!$conn) {
                         die("데이터베이스 연결 실패: " . mysqli_connect_error());
                       }
                       
-                      $sql = "SELECT * FROM product WHERE id IN (". implode(",", $cart) .")";
-                      $result = mysqli_query($conn, $sql);
-                      
-                      // 가져온 결과 출력
-                      if ($result->num_rows > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                              echo $cart[0];
-                              echo $cart[0];
-                              echo $cart[0];
-                              $productId = $row["id"];
-                              $name = $row["name"];
-                              $price = $row["price"];
-                              $totalPrice = $price*2;
-                              echo '
-                              <tr class="table-body-row">
-                                <td class="product-remove">
-                                  <a href="cart.php?action=delete&id='.$productId.'"> 
-                                    <span class="text-danger">삭제</span> 
-                                  </a>
-                                </td>
-                                <td class="product-image">
-                                  <img src="assets/img/products/'.$name.'.jpg" alt="" />
-                                </td>
-                                <td class="product-name">'.$name.'</td>
-                                <td class="product-price">'.$price.'원</td>
-                                <td class="product-quantity">
-                                  <input type="number" placeholder="0" />
-                                </td>
-                                <td class="product-total">'.$totalPrice.'</td>
-                              </tr>';
-                          }
-                      } else {
-                          echo "결과가 없습니다.";
+                      if(isset($cart)){
+                        $sql = "SELECT * FROM product WHERE id IN (". implode(",", array_keys($cart)) .")";
+                        $result = mysqli_query($conn, $sql);
+
+                        foreach ($cart as $row) {
+                          echo '행: '.$id.'<br>';
+                          echo 'id: '.$row['id'].'<br>';
+                          echo 'quantity: '.$row['quantity'].'<br>';
+                          echo 'price: '.$row['price'].'<br>';
+                          echo 'name: '.$row['name'].'<br>';
+                          echo '<br>';
+                        }
+                        // 가져온 결과 출력
+                        if ($result->num_rows > 0) {
+                          while ($row = mysqli_fetch_assoc($result)) {
+                                $productId = $row["id"];
+                                $name = $row["name"];
+                                $price = $row["price"];
+
+                    
+                                
+                                $totalPrice = $price*$cart[$productId]['quantity'];
+                                $SumtotalPrice = $SumtotalPrice + $totalPrice;
+                                echo '
+                                <tr class="table-body-row">
+                                  <td class="product-remove">
+                                    <a href="cart.php?action=delete&deleteId='.$productId.'"> 
+                                      <span class="text-danger">삭제</span> 
+                                    </a>
+                                  </td>
+                                  <td class="product-image">
+                                    <img src="assets/img/products/'.$name.'.jpg" alt="" />
+                                  </td>
+                                  <td class="product-name">'.$name.'</td>
+                                  <td class="product-price">'.$price.'원</td>
+                                  <td class="product-quantity">
+                                   '.$cart[$productId]['quantity'].'
+                                  </td>
+                                  <td class="product-total">'.$totalPrice.'</td>
+                                </tr>';
+                            }
+                            setcookie('cart', serialize($cart), time() + (60 * 60), '/');
+                            if($SumtotalPrice >= 20000) {
+                              $shipCost = 0;
+                            } else {
+                              $shipCost = 3000;
+                            }
+                            
+                        } else {
+                            echo "결과가 없습니다.";
+                        }
                       }
-                      
                       // 데이터베이스 연결 종료
+                      
                       $conn->close();       
                   ?>
                   <!-- 추가한 상품 끝 -->
@@ -255,8 +298,26 @@ if(isset($_GET['action']))
                 <!-- 장바구니 목록 끝 -->
               </table>
             </div>
+            <form action="cart.php" method="post">
+              <div class="input-group">
+                <select name="changedProduct" class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                  <option selected>제품 선택</option>
+                  <?php
+                    foreach ($cart as $row) {
+                      echo '
+                      <option value="'.$row['id'].'">'.$row['name'].'</option>
+                      ';
+                    }
+                  ?>
+                </select>
+                <input name="changedProductNum" type="number" class="form-control" placeholder="수량" aria-label="1" aria-describedby="basic-addon1">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-outline-secondary"  name="updateCart">변경</button>
+                </div>
+              </div>
+            </form>
           </div>
-
+                        
           <!-- 계산서 -->
           <div class="col-lg-4">
             <div class="total-section">
@@ -269,33 +330,39 @@ if(isset($_GET['action']))
                 </thead>
                 <tbody>
                   <tr class="total-data">
-                    <td><strong>Subtotal: </strong></td>
-                    <td>$500</td>
+                    <td><strong>제품 총 합 : </strong></td>
+                    <td>
+                      <?php
+                      echo $SumtotalPrice;
+                    ?>
+                    </td>
                   </tr>
                   <tr class="total-data">
-                    <td><strong>Shipping: </strong></td>
-                    <td>$45</td>
+                    <td><strong>배송비 : </strong></td>
+                    <td><?php
+                      echo $shipCost;
+                    ?></td>
                   </tr>
                   <tr class="total-data">
-                    <td><strong>Total: </strong></td>
-                    <td>$545</td>
+                    <td><strong>총합 : </strong></td>
+                    <td>
+                      <?php
+                      echo $SumtotalPrice+$shipCost;
+                    ?>원
+                    </td>
                   </tr>
                 </tbody>
               </table>
-              <div class="cart-buttons">
-                <a href="cart.php" class="boxed-btn">Update Cart</a>
-                <a href="checkout.html" class="boxed-btn black">Check Out</a>
-              </div>
-            </div>
+              <div class="cart-buttons">     
+              <form action="cart.php" method="post">
+                  <button type="submit" name="reset_cart" class="btn btn-outline-success">장바구니 초기화</button>
+                </form> 
 
-            <div class="coupon-section">
-              <h3>쿠폰 적용</h3>
-              <div class="coupon-form-wrap">
-                <form action="index.php">
-                  <p><input type="text" placeholder="Coupon" /></p>
-                  <p><input type="submit" value="Apply" /></p>
-                </form>
               </div>
+              </form>
+                <form action="checkout.php" method="post">
+                  <button type="submit" class="btn btn-outline-success">결재하기</button>
+                </form>
             </div>
           </div>
           <!-- 계산서 끝 -->
@@ -315,7 +382,7 @@ if(isset($_GET['action']))
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Shop</a></li>
-                <li><a href="news.html">News</a></li>
+                <li><a href="promotion.html">News</a></li>
                 <li><a href="contact.html">Contact</a></li>
               </ul>
             </div>

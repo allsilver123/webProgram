@@ -66,7 +66,7 @@
                 <li class="current-list-item">
                   <a href="index.php">소개</a>
                 </li>
-                <li><a href="news.html">프로모션</a></li>
+                <li><a href="promotion.html">프로모션</a></li>
                 <li>
                   <a href="shopMain.php">쇼핑</a>
                   <ul class="sub-menu">
@@ -141,7 +141,7 @@
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Shop</a></li>
-                <li><a href="news.html">News</a></li>
+                <li><a href="promotion.html">News</a></li>
                 <li><a href="contact.html">Contact</a></li>
               </ul>
             </div>

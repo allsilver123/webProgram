@@ -1,3 +1,7 @@
+<?php
+$cart = isset($_COOKIE['cart']) ? unserialize($_COOKIE['cart']) : array();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,7 +14,7 @@
     />
 
     <!-- title -->
-    <title>Shop</title>
+    <title>Check Out</title>
 
     <!-- favicon -->
     <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png" />
@@ -84,12 +88,12 @@
                     <div class="header-icons">
                       <a class="shopping-cart" href="cart.php"
                         ><i class="fas fa-shopping-cart"></i
-                      ></a>                    
+                      ></a>
                     </div>
                   </li>
                 </ul>
               </nav>
-          
+
               <div class="mobile-menu"></div>
               <!-- menu end -->
             </div>
@@ -99,35 +103,14 @@
     </div>
     <!-- end header -->
 
-    <!-- search area -->
-    <div class="search-area">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <span class="close-btn"><i class="fas fa-window-close"></i></span>
-            <div class="search-bar">
-              <div class="search-bar-tablecell">
-                <h3>검색 :</h3>
-                <input type="text" placeholder="어떤 것을 원하시나요?" />
-                <button type="submit">
-                  검색 <i class="fas fa-search"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end search area -->
-
     <!-- breadcrumb-section -->
     <div class="breadcrumb-section breadcrumb-bg">
       <div class="container">
         <div class="row">
           <div class="col-lg-8 offset-lg-2 text-center">
             <div class="breadcrumb-text">
-              <p>맛있고 건강하게</p>
-              <h1>쇼핑</h1>
+              <p>칼로리와이즈</p>
+              <h1>결재</h1>
             </div>
           </div>
         </div>
@@ -135,32 +118,103 @@
     </div>
     <!-- end breadcrumb section -->
 
-    <!-- products -->
-    <div class="product-section mt-150 mb-150">
+    <!-- check out section -->
+    <div class="checkout-section mt-150 mb-150">
       <div class="container">
-        <!-- 필터 -->
         <div class="row">
-          <div class="col-md-12">
-            <div class="product-filters">
-              <ul>
-                <li class="active" data-filter="*">모두</li>
-                <li data-filter=".strawberry">즉석 식품</li>
-                <li data-filter=".berry">음료수</li>
-                <li data-filter=".lemon">냉장 식품</li>
-              </ul>
+          <div class="col-lg-8">
+            <div class="checkout-accordion-wrap">
+              <div class="accordion" id="accordionExample">
+                <div class="card single-accordion">
+                  <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                      <button
+                        class="btn btn-link"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#collapseOne"
+                        aria-expanded="true"
+                        aria-controls="collapseOne"
+                      >
+                        결재 정보
+                      </button>
+                    </h5>
+                  </div>
+
+                  <div
+                    id="collapseOne"
+                    class="collapse show"
+                    aria-labelledby="headingOne"
+                    data-parent="#accordionExample"
+                  >
+                    <div class="card-body">
+                      <div class="billing-address-form">
+                        <form action="order.php">
+                          <p><input type="orderName" name="orderName" placeholder="이름" /></p>
+                          <p><input type="text" name="deliveryAddress" placeholder="주소" /></p>
+                          <p><input type="tel" name="orderTel" placeholder="전화번호" /></p>
+                          <p>
+                            <input type="text" name="orderText" placeholder="배송 요청 사항" />
+                          </p>
+                          <button type="submit" class="btn btn-success">결재</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="order-details-wrap">
+              <table class="order-details">
+                <thead>
+                  <tr>
+                    <th>제품 이름</th>
+                    <th>가격</th>
+                    <th>수량</th>
+                  </tr>
+                </thead>
+                <tbody class="order-details-body">
+                  <?php
+                  $totalOrderPrice = 0;
+                  $totalQuantity = 0;
+                    foreach ($cart as $row) {
+                      $totalOrderPrice = $totalOrderPrice + $row['price'] * $row['quantity'];
+                      $totalQuantity = $totalQuantity + $row['quantity'];
+                      echo '
+                        <tr>
+                          <td>'.$row['name'].'</td>
+                          <td>'.$row['price'].'</td>
+                          <td>'.$row['quantity'].'</td>
+                        </tr>';
+                    }
+                    if($totalOrderPrice <=20000) {
+                      echo '
+                      <tr>
+                      <td>배송비</td>
+                      <td>3000</td>
+                      </tr>
+                      ';
+
+                      $totalOrderPrice+=3000;
+                    }
+                    echo '
+                    <td>총합</td>
+                      <td>'.$totalOrderPrice.'</td>
+                      <td>'.$totalQuantity.'</td>
+                    </tr>';
+                  ?>
+                    
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-
-        <!-- 상품들 -->
-        <div class="row product-lists">
-        <?php include "shopMainList.php"; ?>
-        </div>
-        <!-- 상품들 끝 -->
-
       </div>
     </div>
-    <!-- end products -->
+    <!-- end check out section -->
 
     <!-- footer -->
     <div class="footer-area">
