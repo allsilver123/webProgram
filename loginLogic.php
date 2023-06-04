@@ -1,8 +1,9 @@
 <?php
 // 회원가입 정보 가져오기
-$accoutId = $_POST['accoutId'];
-$password = $_POST['password'];
-
+$accountId = $_POST['accountId'];
+$accountPassword = $_POST['accountPassword'];
+echo $accountId.'<br>';
+echo $accountPassword;
 $servername = "20.244.1.134:3306"; // 데이터베이스 서버 이름
 $username = "test"; // 데이터베이스 사용자 이름
 $password = "2007"; // 데이터베이스 비밀번호
@@ -16,7 +17,7 @@ if ($conn->connect_error) {
 
 
 $stmt = $conn->prepare("SELECT * FROM account WHERE accountId = ? AND password = ?");
-$stmt->bind_param("ss", $accountId, $password);
+$stmt->bind_param("ss", $accountId, $accountPassword);
 
 $stmt->execute();
 
@@ -26,7 +27,8 @@ if ($result->num_rows > 0) {
   // 로그인 성공
   session_start();
   $_SESSION['accountId'] = $accountId;
-  header('Location: shopMain.php'); // 로그인 성공 시 리다이렉션할 페이지
+  echo '<script>alert("로그인 성공!")</script>';
+  echo '<script>window.location="shopMain.php"</script>';
   exit;
 } else {
   // 로그인 실패

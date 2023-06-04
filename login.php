@@ -69,17 +69,40 @@
                   <li class="current-list-item">
                     <a href="index.php">소개</a>
                   </li>
-                  <li><a href="promotion.html">프로모션</a></li>
+                  <li><a href="promotion.php">프로모션</a></li>
                   <li>
                     <a href="shopMain.php">쇼핑</a>
                     <ul class="sub-menu">
                       <li><a href="shopMain.php">쇼핑</a></li>
-                      <li><a href="checkout.html">Check Out</a></li>
-                      <li><a href="productDetail.php">Single Product</a></li>
+                      <li><a href="checkout.php">주문</a></li>
                       <li><a href="cart.php">장바구니</a></li>
                     </ul>
                   </li>
-                  <li><a href="contact.html">문의하기</a></li>
+                    <?php
+                    session_start();
+                    $accountId = $_SESSION['accountId'];
+
+                    if(isset($accountId)) {
+                      echo '
+                        <li>
+                          <a href="#">마이페이지</a>
+                          <ul class="sub-menu">
+                            <li><a href="logout.php">로그아웃</a></li>
+                          </ul>
+                        </li>';
+                    } else {
+                      echo '
+                        <li>
+                          <a href="login.php">회원</a>
+                          <ul class="sub-menu">
+                            <li><a href="login.php">로그인</a></li>
+                            <li><a href="signin.php">회원가입</a></li>
+                          </ul>
+                        </li>';
+                    }
+                    ?>
+                  </li>
+                  <li><a href="contact.php">문의하기</a></li>
                   <li>
                     <div class="header-icons">
                       <a class="shopping-cart" href="cart.php"
@@ -89,7 +112,6 @@
                   </li>
                 </ul>
               </nav>
-
               <div class="mobile-menu"></div>
               <!-- menu end -->
             </div>
@@ -117,7 +139,7 @@
     <!-- check out section -->
     <div class="checkout-section mt-150 mb-150">
       <div class="container">
-        <div class="row">
+        <div class="row justify-content-center">
           <div class="col-lg-8">
             <div class="checkout-accordion-wrap">
               <div class="accordion" id="accordionExample">
@@ -145,11 +167,11 @@
                   >
                     <div class="card-body">
                       <div class="billing-address-form">
-                        <form method="POST" action="createAccount.php">
+                        <form method="POST" action="loginLogic.php">
                           <p>
                             <input
                               type="text"
-                              name="accoutId"
+                              name="accountId"
                               placeholder="아이디"
                               required
                             />
@@ -157,7 +179,7 @@
                           <p>
                             <input
                               type="password"
-                              name="password"
+                              name="accountPassword"
                               placeholder="비밀번호"
                               required
                             />
@@ -165,9 +187,16 @@
                           <button type="submit" class="btn btn-success">
                             로그인
                           </button>
+                          <button
+                            onclick="window.location.href='signin.php'"
+                            class="btn btn-success"
+                            >
+                            회원가입
+                          </button>
                         </form>
                       </div>
                     </div>
+                    
                   </div>
                 </div>
               </div>
@@ -189,8 +218,8 @@
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Shop</a></li>
-                <li><a href="promotion.html">News</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="promotion.php">News</a></li>
+                <li><a href="contact.php">Contact</a></li>
               </ul>
             </div>
           </div>

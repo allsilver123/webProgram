@@ -4,7 +4,6 @@ $accountId = $_SESSION['accountId'];
 
 if(isset($accountId) && isset($_COOKIE['cart'])) {
     $cart = unserialize($_COOKIE['cart']);
-    $accountId = $_POST['accountId'];
 
     $orderName = $_POST['orderName'];
     $deliveryAddress = $_POST['deliveryAddress'];
@@ -42,12 +41,15 @@ if(isset($accountId) && isset($_COOKIE['cart'])) {
 
     if ($conn->query($sql) === TRUE) {
         // 회원가입 완료 후 리다이렉션
-        echo '<script>alert("회원 가입 성공!")</script>';
+        echo '<script>alert("주문 성공!")</script>';
         echo '<script>window.location="shopMain.php"</script>';
         exit;
     } else {
-        echo "회원가입을 처리하는 동안 오류가 발생했습니다: " . $conn->error;
+        echo "주문을 처리하는 동안 오류가 발생했습니다: " . $conn->error;
     }
     
+} else {
+    echo '<script>alert("로그인 해주세요!")</script>';
+        echo '<script>window.location="login.php"</script>';
 }
 ?>

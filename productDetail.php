@@ -66,7 +66,7 @@
                 <li class="current-list-item">
                   <a href="index.php">소개</a>
                 </li>
-                <li><a href="promotion.html">프로모션</a></li>
+                <li><a href="promotion.php">프로모션</a></li>
                 <li>
                   <a href="shopMain.php">쇼핑</a>
                   <ul class="sub-menu">
@@ -76,7 +76,7 @@
                     <li><a href="cart.php">장바구니</a></li>
                   </ul>
                 </li>
-                <li><a href="contact.html">문의하기</a></li>
+                <li><a href="contact.php">문의하기</a></li>
                 <li>
                   <div class="header-icons">
                     <a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
@@ -141,8 +141,8 @@
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Shop</a></li>
-                <li><a href="promotion.html">News</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="promotion.php">News</a></li>
+                <li><a href="contact.php">Contact</a></li>
               </ul>
             </div>
           </div>

@@ -10,7 +10,7 @@
     />
 
     <!-- title -->
-    <title>Check Out</title>
+    <title>Contact</title>
 
     <!-- favicon -->
     <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png" />
@@ -69,17 +69,40 @@
                   <li class="current-list-item">
                     <a href="index.php">소개</a>
                   </li>
-                  <li><a href="promotion.html">프로모션</a></li>
+                  <li><a href="promotion.php">프로모션</a></li>
                   <li>
                     <a href="shopMain.php">쇼핑</a>
                     <ul class="sub-menu">
                       <li><a href="shopMain.php">쇼핑</a></li>
-                      <li><a href="checkout.html">Check Out</a></li>
-                      <li><a href="productDetail.php">Single Product</a></li>
+                      <li><a href="checkout.php">주문</a></li>
                       <li><a href="cart.php">장바구니</a></li>
                     </ul>
                   </li>
-                  <li><a href="contact.html">문의하기</a></li>
+                    <?php
+                    session_start();
+                    $accountId = $_SESSION['accountId'];
+
+                    if(isset($accountId)) {
+                      echo '
+                        <li>
+                          <a href="#">마이페이지</a>
+                          <ul class="sub-menu">
+                            <li><a href="logout.php">로그아웃</a></li>
+                          </ul>
+                        </li>';
+                    } else {
+                      echo '
+                        <li>
+                          <a href="login.php">회원</a>
+                          <ul class="sub-menu">
+                            <li><a href="login.php">로그인</a></li>
+                            <li><a href="signin.php">회원가입</a></li>
+                          </ul>
+                        </li>';
+                    }
+                    ?>
+                  </li>
+                  <li><a href="contact.php">문의하기</a></li>
                   <li>
                     <div class="header-icons">
                       <a class="shopping-cart" href="cart.php"
@@ -89,7 +112,6 @@
                   </li>
                 </ul>
               </nav>
-
               <div class="mobile-menu"></div>
               <!-- menu end -->
             </div>
@@ -105,8 +127,8 @@
         <div class="row">
           <div class="col-lg-8 offset-lg-2 text-center">
             <div class="breadcrumb-text">
-              <p>칼로리와이즈</p>
-              <h1>회원가입</h1>
+              <p>배송만 빠른것이 아닙니다</p>
+              <h1>문의 하기</h1>
             </div>
           </div>
         </div>
@@ -114,101 +136,114 @@
     </div>
     <!-- end breadcrumb section -->
 
-    <!-- check out section -->
-    <div class="checkout-section mt-150 mb-150">
+    <!-- contact form -->
+    <div class="contact-from-section mt-150 mb-150">
       <div class="container">
         <div class="row">
-          <div class="col-lg-8" >
-            <div class="checkout-accordion-wrap">
-              <div class="accordion" id="accordionExample">
-                <div class="card single-accordion">
-                  <div class="card-header" id="headingOne">
-                    <h5 class="mb-0">
-                      <button
-                        class="btn btn-link"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#collapseOne"
-                        aria-expanded="true"
-                        aria-controls="collapseOne"
-                      >
-                        회원 정보 입력
-                      </button>
-                    </h5>
-                  </div>
-
-                  <div
-                    id="collapseOne"
-                    class="collapse show"
-                    aria-labelledby="headingOne"
-                    data-parent="#accordionExample"
-                  >
-                    <div class="card-body">
-                      <div class="billing-address-form">
-                        <form method="POST" action="signInRespond.php">
-                          <p>
-                            <input
-                              type="text"
-                              name="accountId"
-                              placeholder="아이디"
-                              required
-                            />
-                          </p>
-                          <p>
-                            <input
-                              type="password"
-                              name="password"
-                              placeholder="비밀번호"
-                              required
-                            />
-                          </p>
-                          <p>
-                            <input
-                              type="text"
-                              name="userName"
-                              placeholder="이름"
-                              required
-                            />
-                          </p>
-                          <p>
-                            <input
-                              type="email"
-                              name="userEmail"
-                              placeholder="이메일"
-                              required
-                            />
-                          </p>
-                          <p>
-                            <input
-                              type="text"
-                              name="userLocation"
-                              placeholder="주소"
-                              required
-                            />
-                          </p>
-                          <p>
-                            <input
-                              type="tel"
-                              name="userPhoneNumber"
-                              placeholder="전화번호"
-                              required
-                            />
-                          </p>
-                          <button type="submit" class="btn btn-success">가입</button>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="col-lg-8 mb-5 mb-lg-0">
+            <div class="form-title">
+              <h2>문의 사항이 있나요?</h2>
+              <p>문의를 주시면 최대한 빠르게 답해드리겠습니다!</p>
+            </div>
+            <div id="form_status"></div>
+            <div class="contact-form">
+              <form
+                type="POST"
+                id="fruitkha-contact"
+                onSubmit="return valid_datas( this );"
+              >
+                <p>
+                  <input type="text" placeholder="이름" name="name" id="name" />
+                  <input
+                    type="email"
+                    placeholder="이메일"
+                    name="email"
+                    id="email"
+                  />
+                </p>
+                <p>
+                  <input
+                    type="tel"
+                    placeholder="전화번호"
+                    name="phone"
+                    id="phone"
+                  />
+                  <input
+                    type="text"
+                    placeholder="문의 종류"
+                    name="subject"
+                    id="subject"
+                  />
+                </p>
+                <p>
+                  <textarea
+                    name="message"
+                    id="message"
+                    cols="30"
+                    rows="10"
+                    placeholder="내용을 적어주세요"
+                  ></textarea>
+                </p>
+                <input type="hidden" name="token" value="FsWga4&@f6aw" />
+                <p><input type="submit" value="전송" /></p>
+              </form>
             </div>
           </div>
+          <div class="col-lg-4">
+            <div class="contact-form-wrap">
+              <div class="contact-form-box">
+                <h4><i class="fas fa-map"></i> 주소</h4>
+                <p>
+                  충청남도 천안시 동남구 <br />
+                  병천면 충절로 1600 <br />
+                </p>
+              </div>
+              <div class="contact-form-box">
+                <h4><i class="far fa-clock"></i> 상담 가능 시간</h4>
+                <p>
+                  평일 : 오전9 ~ 오후9 <br />
+                  주말, 공휴일 : 오전12 ~ 오후8
+                </p>
+              </div>
+              <div class="contact-form-box">
+                <h4><i class="fas fa-address-book"></i> 연락처</h4>
+                <p>
+                  Phone: 041 560 1230 <br />
+                  Email: support@calorieWise.com
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- end check out section -->
+    <!-- end contact form -->
+
+    <!-- find our location -->
+    <div class="find-location blue-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <p><i class="fas fa-map-marker-alt"></i> 찾아 오시는 길</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end find our location -->
+
+    <!-- google map section -->
+    <div class="embed-responsive embed-responsive-21by9">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.2853193681954!2d127.27706958870465!3d36.763722198234774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b2ac6c614c717%3A0x820bda83618bd53b!2z7ZWc6rWt6riw7Iig6rWQ7Jyh64yA7ZWZ6rWQIOygnDHsuqDtjbzsiqQ!5e0!3m2!1sko!2skr!4v1685788527331!5m2!1sko!2skr"
+        width="600"
+        height="450"
+        frameborder="0"
+        style="border: 0"
+        allowfullscreen=""
+        class="embed-responsive-item"
+      ></iframe>
+    </div>
+    <!-- end google map section -->
 
     <!-- footer -->
     <div class="footer-area">
@@ -221,8 +256,8 @@
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Shop</a></li>
-                <li><a href="promotion.html">News</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="promotion.php">News</a></li>
+                <li><a href="contact.php">Contact</a></li>
               </ul>
             </div>
           </div>
@@ -271,6 +306,8 @@
     <script src="assets/js/jquery.meanmenu.min.js"></script>
     <!-- sticker js -->
     <script src="assets/js/sticker.js"></script>
+    <!-- form validation js -->
+    <script src="assets/js/form-validate.js"></script>
     <!-- main js -->
     <script src="assets/js/main.js"></script>
   </body>

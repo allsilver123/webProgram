@@ -139,32 +139,49 @@ if(isset($_POST['reset_cart'])) {
                   <li class="current-list-item">
                     <a href="index.php">소개</a>
                   </li>
-                  <li><a href="promotion.html">프로모션</a></li>
+                  <li><a href="promotion.php">프로모션</a></li>
                   <li>
                     <a href="shopMain.php">쇼핑</a>
                     <ul class="sub-menu">
                       <li><a href="shopMain.php">쇼핑</a></li>
-                      <li><a href="checkout.html">Check Out</a></li>
-                      <li><a href="productDetail.php">Single Product</a></li>
+                      <li><a href="checkout.php">주문</a></li>
                       <li><a href="cart.php">장바구니</a></li>
                     </ul>
                   </li>
-                  <li><a href="contact.html">문의하기</a></li>
+                    <?php
+                    session_start();
+                    $accountId = $_SESSION['accountId'];
+
+                    if(isset($accountId)) {
+                      echo '
+                        <li>
+                          <a href="#">마이페이지</a>
+                          <ul class="sub-menu">
+                            <li><a href="logout.php">로그아웃</a></li>
+                          </ul>
+                        </li>';
+                    } else {
+                      echo '
+                        <li>
+                          <a href="login.php">회원</a>
+                          <ul class="sub-menu">
+                            <li><a href="login.php">로그인</a></li>
+                            <li><a href="signin.php">회원가입</a></li>
+                          </ul>
+                        </li>';
+                    }
+                    ?>
+                  </li>
+                  <li><a href="contact.php">문의하기</a></li>
                   <li>
                     <div class="header-icons">
                       <a class="shopping-cart" href="cart.php"
                         ><i class="fas fa-shopping-cart"></i
                       ></a>
-                      <a class="mobile-hide search-bar-icon" href="#"
-                        ><i class="fas fa-search"></i
-                      ></a>
                     </div>
                   </li>
                 </ul>
               </nav>
-              <a class="mobile-show search-bar-icon" href="#"
-                ><i class="fas fa-search"></i
-              ></a>
               <div class="mobile-menu"></div>
               <!-- menu end -->
             </div>
@@ -384,8 +401,8 @@ if(isset($_POST['reset_cart'])) {
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Shop</a></li>
-                <li><a href="promotion.html">News</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="promotion.php">News</a></li>
+                <li><a href="contact.php">Contact</a></li>
               </ul>
             </div>
           </div>

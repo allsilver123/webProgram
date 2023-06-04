@@ -69,32 +69,27 @@
                   <li class="current-list-item">
                     <a href="index.php">소개</a>
                   </li>
-                  <li><a href="promotion.html">프로모션</a></li>
+                  <li><a href="promotion.php">프로모션</a></li>
                   <li>
                     <a href="shopMain.php">쇼핑</a>
                     <ul class="sub-menu">
                       <li><a href="shopMain.php">쇼핑</a></li>
-                      <li><a href="checkout.html">Check Out</a></li>
-                      <li><a href="productDetail.php">Single Product</a></li>
+                      <li><a href="checkout.php">주문</a></li>
                       <li><a href="cart.php">장바구니</a></li>
                     </ul>
                   </li>
-                  <li><a href="contact.html">문의하기</a></li>
+                  <li><a href="login.php">로그인</a></li>
+                  <li><a href="contact.php">문의하기</a></li>
                   <li>
                     <div class="header-icons">
                       <a class="shopping-cart" href="cart.php"
                         ><i class="fas fa-shopping-cart"></i
                       ></a>
-                      <a class="mobile-hide search-bar-icon" href="#"
-                        ><i class="fas fa-search"></i
-                      ></a>
                     </div>
                   </li>
                 </ul>
               </nav>
-              <a class="mobile-show search-bar-icon" href="#"
-                ><i class="fas fa-search"></i
-              ></a>
+
               <div class="mobile-menu"></div>
               <!-- menu end -->
             </div>
@@ -281,12 +276,12 @@
         <div class="row">
           <div class="col-lg-4 col-md-6">
             <div class="single-latest-news">
-              <a href="single-promotion.html"
+              <a href="single-promotion.php"
                 ><div class="latest-news-bg news-bg-1"></div
               ></a>
               <div class="news-text-box">
                 <h3>
-                  <a href="single-promotion.html">플레인 베이글 할인</a>
+                  <a href="single-promotion.php">플레인 베이글 할인</a>
                 </h3>
                 <p class="blog-meta">
                   <span class="date"
@@ -296,7 +291,7 @@
                 <p class="excerpt">
                   순수한 맛의 플레인 베이글, 오리지널 풍미를 즐겨보세요!
                 </p>
-                <a href="single-promotion.html" class="read-more-btn"
+                <a href="single-promotion.php" class="read-more-btn"
                   >더 알아보기 <i class="fas fa-angle-right"></i
                 ></a>
               </div>
@@ -304,12 +299,12 @@
           </div>
           <div class="col-lg-4 col-md-6">
             <div class="single-latest-news">
-              <a href="single-promotion.html"
+              <a href="single-promotion.php"
                 ><div class="latest-news-bg news-bg-2"></div
               ></a>
               <div class="news-text-box">
                 <h3>
-                  <a href="single-promotion.html">건면 할인전</a>
+                  <a href="single-promotion.php">건면 할인전</a>
                 </h3>
                 <p class="blog-meta">
                   <span class="date"
@@ -320,7 +315,7 @@
                   면발을 튀기지 않고 기름에 튀기지 않고 열풍으로 자연건조시킨
                   건강하게!
                 </p>
-                <a href="single-promotion.html" class="read-more-btn"
+                <a href="single-promotion.php" class="read-more-btn"
                   >더 알아보기 <i class="fas fa-angle-right"></i
                 ></a>
               </div>
@@ -328,12 +323,12 @@
           </div>
           <div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
             <div class="single-latest-news">
-              <a href="single-promotion.html"
+              <a href="single-promotion.php"
                 ><div class="latest-news-bg news-bg-3"></div
               ></a>
               <div class="news-text-box">
                 <h3>
-                  <a href="single-promotion.html">제로 음료수 할인</a>
+                  <a href="single-promotion.php">제로 음료수 할인</a>
                 </h3>
                 <p class="blog-meta">
                   <span class="date"
@@ -344,7 +339,7 @@
                   달달하게 땅길때는?<br />
                   0칼로리로 부담없이
                 </p>
-                <a href="single-promotion.html" class="read-more-btn"
+                <a href="single-promotion.php" class="read-more-btn"
                   >더 알아보기<i class="fas fa-angle-right"></i
                 ></a>
               </div>
@@ -353,7 +348,7 @@
         </div>
         <div class="row">
           <div class="col-lg-12 text-center">
-            <a href="promotion.html" class="boxed-btn"
+            <a href="promotion.php" class="boxed-btn"
               >더 다양한 프로모션 알아보기</a
             >
           </div>
@@ -373,8 +368,8 @@
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Shop</a></li>
-                <li><a href="promotion.html">News</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="promotion.php">News</a></li>
+                <li><a href="contact.php">Contact</a></li>
               </ul>
             </div>
           </div>

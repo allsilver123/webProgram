@@ -1,7 +1,7 @@
 <?php
 // 회원가입 정보 가져오기
 $accountId = $_POST['accountId'];
-$password = $_POST['password'];
+$userPassword = $_POST['password'];
 $userName = $_POST['userName'];
 $userEmail = $_POST['userEmail'];
 $userLocation = $_POST['userLocation'];
@@ -25,7 +25,7 @@ if ($result->num_rows > 0) {
 } else {
     // 중복된 아이디가 없음 - 회원가입 처리
     $sql = "INSERT INTO account (accountId, password, userName, userEmail, userLocation, userPhoneNumber) 
-            VALUES ('$accountId', '$password', '$userName', '$userEmail', '$userLocation', '$userPhoneNumber')";
+            VALUES ('$accountId', '$userPassword', '$userName', '$userEmail', '$userLocation', '$userPhoneNumber')";
 
     if ($conn->query($sql) === TRUE) {
         // 회원가입 완료 후 리다이렉션

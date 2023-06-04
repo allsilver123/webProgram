@@ -73,17 +73,40 @@ $cart = isset($_COOKIE['cart']) ? unserialize($_COOKIE['cart']) : array();
                   <li class="current-list-item">
                     <a href="index.php">소개</a>
                   </li>
-                  <li><a href="promotion.html">프로모션</a></li>
+                  <li><a href="promotion.php">프로모션</a></li>
                   <li>
                     <a href="shopMain.php">쇼핑</a>
                     <ul class="sub-menu">
                       <li><a href="shopMain.php">쇼핑</a></li>
-                      <li><a href="checkout.html">Check Out</a></li>
-                      <li><a href="productDetail.php">Single Product</a></li>
+                      <li><a href="checkout.php">주문</a></li>
                       <li><a href="cart.php">장바구니</a></li>
                     </ul>
                   </li>
-                  <li><a href="contact.html">문의하기</a></li>
+                    <?php
+                    session_start();
+                    $accountId = $_SESSION['accountId'];
+
+                    if(isset($accountId)) {
+                      echo '
+                        <li>
+                          <a href="#">마이페이지</a>
+                          <ul class="sub-menu">
+                            <li><a href="logout.php">로그아웃</a></li>
+                          </ul>
+                        </li>';
+                    } else {
+                      echo '
+                        <li>
+                          <a href="login.php">회원</a>
+                          <ul class="sub-menu">
+                            <li><a href="login.php">로그인</a></li>
+                            <li><a href="signin.php">회원가입</a></li>
+                          </ul>
+                        </li>';
+                    }
+                    ?>
+                  </li>
+                  <li><a href="contact.php">문의하기</a></li>
                   <li>
                     <div class="header-icons">
                       <a class="shopping-cart" href="cart.php"
@@ -93,7 +116,6 @@ $cart = isset($_COOKIE['cart']) ? unserialize($_COOKIE['cart']) : array();
                   </li>
                 </ul>
               </nav>
-
               <div class="mobile-menu"></div>
               <!-- menu end -->
             </div>
@@ -149,10 +171,10 @@ $cart = isset($_COOKIE['cart']) ? unserialize($_COOKIE['cart']) : array();
                   >
                     <div class="card-body">
                       <div class="billing-address-form">
-                        <form action="order.php">
+                        <form method="POST" action="checkoutOrder.php">
                           <p><input type="orderName" name="orderName" placeholder="이름" /></p>
                           <p><input type="text" name="deliveryAddress" placeholder="주소" /></p>
-                          <p><input type="tel" name="orderTel" placeholder="전화번호" /></p>
+                          <p><input type="number" name="orderTel" placeholder="전화번호" /></p>
                           <p>
                             <input type="text" name="orderText" placeholder="배송 요청 사항" />
                           </p>
@@ -227,8 +249,8 @@ $cart = isset($_COOKIE['cart']) ? unserialize($_COOKIE['cart']) : array();
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Shop</a></li>
-                <li><a href="promotion.html">News</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="promotion.php">News</a></li>
+                <li><a href="contact.php">Contact</a></li>
               </ul>
             </div>
           </div>
