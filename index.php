@@ -49,8 +49,8 @@
     </div>
     <!--PreLoader Ends-->
 
-    <!-- header -->
-    <div class="top-header-area" id="sticker">
+        <!-- header -->
+        <div class="top-header-area" id="sticker">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 col-sm-12 text-center">
@@ -78,7 +78,30 @@
                       <li><a href="cart.php">장바구니</a></li>
                     </ul>
                   </li>
-                  <li><a href="login.php">로그인</a></li>
+                    <?php
+                    session_start();
+                    $accountId = $_SESSION['accountId'];
+
+                    if(isset($accountId)) {
+                      echo '
+                        <li>
+                        <a href="myPage.php">마이페이지</a>
+                          <ul class="sub-menu">
+                            <li><a href="logout.php">로그아웃</a></li>
+                          </ul>
+                        </li>';
+                    } else {
+                      echo '
+                        <li>
+                          <a href="login.php">회원</a>
+                          <ul class="sub-menu">
+                            <li><a href="login.php">로그인</a></li>
+                            <li><a href="signin.php">회원가입</a></li>
+                          </ul>
+                        </li>';
+                    }
+                    ?>
+                  </li>
                   <li><a href="contact.php">문의하기</a></li>
                   <li>
                     <div class="header-icons">
@@ -89,7 +112,6 @@
                   </li>
                 </ul>
               </nav>
-
               <div class="mobile-menu"></div>
               <!-- menu end -->
             </div>
@@ -190,11 +212,11 @@
     <!-- end shop banner -->
 
     <!-- 왜 칼로리 와이즈 인가 -->
-    <div class="feature-bg">
+    <div class="feature-bg" >
       <div class="container">
-        <div class="row">
+        <div class="row" >
           <div class="col-lg-7">
-            <div class="featured-text">
+            <div class="featured-text" >
               <h2 class="pb-3">
                 왜 <span class="orange-text">칼로리와이즈</span>일까요?
               </h2>
@@ -257,6 +279,7 @@
             </div>
           </div>
         </div>
+        
       </div>
     </div>
     <!-- 왜 칼로리 와이즈인가 끝 -->
@@ -277,7 +300,9 @@
           <div class="col-lg-4 col-md-6">
             <div class="single-latest-news">
               <a href="single-promotion.php"
-                ><div class="latest-news-bg news-bg-1"></div
+                ><div class="latest-news-bg news-bg-1" style="
+                    background-image: url('assets/img/products/베이글.jpg');
+                  "></div
               ></a>
               <div class="news-text-box">
                 <h3>
@@ -300,7 +325,9 @@
           <div class="col-lg-4 col-md-6">
             <div class="single-latest-news">
               <a href="single-promotion.php"
-                ><div class="latest-news-bg news-bg-2"></div
+                ><div class="latest-news-bg news-bg-2" style="
+                    background-image: url('assets/img/products/신라면 건면.jpg');
+                  "></div
               ></a>
               <div class="news-text-box">
                 <h3>
@@ -324,7 +351,9 @@
           <div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
             <div class="single-latest-news">
               <a href="single-promotion.php"
-                ><div class="latest-news-bg news-bg-3"></div
+                ><div class="latest-news-bg news-bg-3"   style="
+                    background-image: url('assets/img/products/제로 콜라 1.5L.jpg');
+                  "></div
               ></a>
               <div class="news-text-box">
                 <h3>

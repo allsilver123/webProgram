@@ -49,8 +49,8 @@
     </div>
     <!--PreLoader Ends-->
 
-    <!-- header -->
-    <div class="top-header-area" id="sticker">
+     <!-- header -->
+     <div class="top-header-area" id="sticker">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 col-sm-12 text-center">
@@ -78,7 +78,30 @@
                       <li><a href="cart.php">장바구니</a></li>
                     </ul>
                   </li>
-                  <li><a href="login.php">로그인</a></li>
+                    <?php
+                    session_start();
+                    $accountId = $_SESSION['accountId'];
+
+                    if(isset($accountId)) {
+                      echo '
+                        <li>
+                        <a href="myPage.php">마이페이지</a>
+                          <ul class="sub-menu">
+                            <li><a href="logout.php">로그아웃</a></li>
+                          </ul>
+                        </li>';
+                    } else {
+                      echo '
+                        <li>
+                          <a href="login.php">회원</a>
+                          <ul class="sub-menu">
+                            <li><a href="login.php">로그인</a></li>
+                            <li><a href="signin.php">회원가입</a></li>
+                          </ul>
+                        </li>';
+                    }
+                    ?>
+                  </li>
                   <li><a href="contact.php">문의하기</a></li>
                   <li>
                     <div class="header-icons">
@@ -89,7 +112,6 @@
                   </li>
                 </ul>
               </nav>
-
               <div class="mobile-menu"></div>
               <!-- menu end -->
             </div>
@@ -144,9 +166,9 @@
             <div class="product-filters">
               <ul>
                 <li class="active" data-filter="*">모두</li>
-                <li data-filter=".strawberry">즉석 식품</li>
-                <li data-filter=".berry">음료수</li>
-                <li data-filter=".lemon">냉장 식품</li>
+                <li data-filter=".즉석식품">즉석 식품</li>
+                <li data-filter=".음료수">음료수</li>
+                <li data-filter=".냉동식품">냉동 식품</li>
               </ul>
             </div>
           </div>

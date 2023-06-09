@@ -1,7 +1,7 @@
 <?php
 // 회원가입 정보 가져오기
 $accountId = $_POST['accountId'];
-$userPassword = $_POST['password'];
+$userPassword = $_POST['userPassword'];
 $userName = $_POST['userName'];
 $userEmail = $_POST['userEmail'];
 $userLocation = $_POST['userLocation'];

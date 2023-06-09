@@ -28,16 +28,15 @@ if(isset($accountId) && isset($_COOKIE['cart'])) {
         $totalPrice = $totalPrice + $item['price'] * $item['quantity'];
     }
 
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+
     $productList = implode(', ', $ids);
     $productQuantityList = implode(', ', $quantitys);
 
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-
-
-   
-
-    $sql = "INSERT INTO orders (accountId, orderName, deliveryAddress, orderTel, orderText, productList, productQuantityList, totalPrice) 
-            VALUES ('$accountId', '$orderName', '$deliveryAddress', '$orderTel', '$orderText', '$productList', '$productQuantityList', '$totalPrice')";
+    $sql = "INSERT INTO orders (accountId, orderName, deliveryAddress, orderTel, 
+            orderText, productList, productQuantityList, totalPrice) 
+            VALUES ('$accountId', '$orderName', '$deliveryAddress', '$orderTel', 
+            '$orderText', '$productList', '$productQuantityList', '$totalPrice')";
 
     if ($conn->query($sql) === TRUE) {
         // 회원가입 완료 후 리다이렉션
@@ -50,6 +49,6 @@ if(isset($accountId) && isset($_COOKIE['cart'])) {
     
 } else {
     echo '<script>alert("로그인 해주세요!")</script>';
-        echo '<script>window.location="login.php"</script>';
+    echo '<script>window.location="login.php"</script>';
 }
 ?>

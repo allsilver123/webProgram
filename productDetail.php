@@ -46,75 +46,79 @@
   </div>
   <!--PreLoader Ends-->
 
-  <!-- header -->
-  <div class="top-header-area" id="sticker">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 col-sm-12 text-center">
-          <div class="main-menu-wrap">
-            <!-- logo -->
-            <div class="site-logo">
-              <a href="index.php">
-                <img src="assets/img/logo.png" alt="" />
-              </a>
-            </div>
-            <!-- logo -->
+      <!-- header -->
+      <div class="top-header-area" id="sticker">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-sm-12 text-center">
+            <div class="main-menu-wrap">
+              <!-- logo -->
+              <div class="site-logo">
+                <a href="index.php">
+                  <img src="assets/img/logo.png" alt="" />
+                </a>
+              </div>
+              <!-- logo -->
 
-            <!-- menu start -->
-            <nav class="main-menu">
-              <ul>
-                <li class="current-list-item">
-                  <a href="index.php">소개</a>
-                </li>
-                <li><a href="promotion.php">프로모션</a></li>
-                <li>
-                  <a href="shopMain.php">쇼핑</a>
-                  <ul class="sub-menu">
-                    <li><a href="shopMain.php">쇼핑</a></li>
-                    <li><a href="checkout.html">Check Out</a></li>
-                    <li><a href="productDetail.php">Single Product</a></li>
-                    <li><a href="cart.php">장바구니</a></li>
-                  </ul>
-                </li>
-                <li><a href="contact.php">문의하기</a></li>
-                <li>
-                  <div class="header-icons">
-                    <a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
-                    <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
-                  </div>
-                </li>
-              </ul>
-            </nav>
-            <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
-            <div class="mobile-menu"></div>
-            <!-- menu end -->
+              <!-- menu start -->
+              <nav class="main-menu">
+                <ul>
+                  <li class="current-list-item">
+                    <a href="index.php">소개</a>
+                  </li>
+                  <li><a href="promotion.php">프로모션</a></li>
+                  <li>
+                    <a href="shopMain.php">쇼핑</a>
+                    <ul class="sub-menu">
+                      <li><a href="shopMain.php">쇼핑</a></li>
+                      <li><a href="checkout.php">주문</a></li>
+                      <li><a href="cart.php">장바구니</a></li>
+                    </ul>
+                  </li>
+                    <?php
+                    session_start();
+                    $accountId = $_SESSION['accountId'];
+
+                    if(isset($accountId)) {
+                      echo '
+                        <li>
+                        <a href="myPage.php">마이페이지</a>
+                          <ul class="sub-menu">
+                            <li><a href="logout.php">로그아웃</a></li>
+                          </ul>
+                        </li>';
+                    } else {
+                      echo '
+                        <li>
+                          <a href="login.php">회원</a>
+                          <ul class="sub-menu">
+                            <li><a href="login.php">로그인</a></li>
+
+                            <li><a href="signin.php">회원가입</a></li>
+                          </ul>
+                        </li>';
+                    }
+                    ?>
+                  </li>
+                  <li><a href="contact.php">문의하기</a></li>
+                  <li>
+                    <div class="header-icons">
+                      <a class="shopping-cart" href="cart.php"
+                        ><i class="fas fa-shopping-cart"></i
+                      ></a>
+                    </div>
+                  </li>
+                </ul>
+              </nav>
+              <div class="mobile-menu"></div>
+              <!-- menu end -->
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- end header -->
+    <!-- end header -->
 
-  <!-- search area -->
-  <div class="search-area">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <span class="close-btn"><i class="fas fa-window-close"></i></span>
-          <div class="search-bar">
-            <div class="search-bar-tablecell">
-              <h3>Search For:</h3>
-              <input type="text" placeholder="Keywords" />
-              <button type="submit">
-                Search <i class="fas fa-search"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> 
-  <!-- end search arewa -->
 
   <!-- breadcrumb-section -->
   <div class="breadcrumb-section breadcrumb-bg"></div>

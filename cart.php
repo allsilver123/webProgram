@@ -48,7 +48,6 @@ if(isset($_GET['action']))
 
 //장바구니 업데이트
 if (isset($_POST['updateCart'])) {
-  echo 'fdassssssssss';
   $changedProduct = $_POST['changedProduct'];
   $changedProductNum = $_POST['changedProductNum'];
   $cart[$changedProduct]['quantity'] = $changedProductNum;
@@ -109,6 +108,9 @@ if(isset($_POST['reset_cart'])) {
     <link rel="stylesheet" href="assets/css/main.css" />
     <!-- responsive -->
     <link rel="stylesheet" href="assets/css/responsive.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   </head>
   <body>
     <!--PreLoader-->
@@ -119,8 +121,8 @@ if(isset($_POST['reset_cart'])) {
     </div>
     <!--PreLoader Ends-->
 
-    <!-- header -->
-    <div class="top-header-area" id="sticker">
+        <!-- header -->
+        <div class="top-header-area" id="sticker">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 col-sm-12 text-center">
@@ -155,7 +157,7 @@ if(isset($_POST['reset_cart'])) {
                     if(isset($accountId)) {
                       echo '
                         <li>
-                          <a href="#">마이페이지</a>
+                        <a href="myPage.php">마이페이지</a>
                           <ul class="sub-menu">
                             <li><a href="logout.php">로그아웃</a></li>
                           </ul>
@@ -257,7 +259,7 @@ if(isset($_POST['reset_cart'])) {
                       if(isset($cart)){
                         $sql = "SELECT * FROM product WHERE id IN (". implode(",", array_keys($cart)) .")";
                         $result = mysqli_query($conn, $sql);
-
+                        /*
                         foreach ($cart as $row) {
                           echo '행: '.$id.'<br>';
                           echo 'id: '.$row['id'].'<br>';
@@ -266,15 +268,23 @@ if(isset($_POST['reset_cart'])) {
                           echo 'name: '.$row['name'].'<br>';
                           echo '<br>';
                         }
+                        */
                         // 가져온 결과 출력
                         if ($result->num_rows > 0) {
+                          $calories = 0;
+                          $carbohydrate = 0;
+                          $protein = 0;
+                          $fat = 0;
                           while ($row = mysqli_fetch_assoc($result)) {
                                 $productId = $row["id"];
                                 $name = $row["name"];
                                 $price = $row["price"];
 
-                    
-                                
+                                $calories += $row["calorie"];
+                                $carbohydrate += $row["carbohydrate"];
+                                $protein += $row["protein"];
+                                $fat += $row["fat"];
+
                                 $totalPrice = $price*$cart[$productId]['quantity'];
                                 $SumtotalPrice = $SumtotalPrice + $totalPrice;
                                 echo '
@@ -335,6 +345,35 @@ if(isset($_POST['reset_cart'])) {
                 </div>
               </div>
             </form>
+            <?php
+            echo '<br><br>
+                    <div class="col-md-6 justify-content-center">
+                    <h4>장바구니 영양성분 비율<h4>
+                    <canvas id="pieChart"></canvas>
+                  <br />
+                  </div>
+                  
+                  <script>
+                    var ctxP = document.getElementById("pieChart").getContext("2d");
+                    var myPieChart = new Chart(ctxP, {
+                      type: "pie",
+                      data: {
+                        labels: ["탄수화물", "반백질", "지방"],
+                        datasets: [
+                          {
+                            data: [' .$carbohydrate .", " .$protein .", " .$fat .'],
+                            backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C"],
+                            hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870"],
+                          },
+                        ],
+                      },
+                      options: {
+                        responsive: true,
+                      },
+                    });
+                  </script>
+                  ';
+            ?>
           </div>
                         
           <!-- 계산서 -->
@@ -372,16 +411,20 @@ if(isset($_POST['reset_cart'])) {
                   </tr>
                 </tbody>
               </table>
-              <div class="cart-buttons">     
-              <form action="cart.php" method="post">
-                  <button type="submit" name="reset_cart" class="btn btn-outline-success">장바구니 초기화</button>
-                </form> 
-
+              <div class="cart-buttons"> 
+                <div>    
+                  <form action="cart.php" method="post">
+                    <button type="submit" name="reset_cart" class="btn btn-outline-success">장바구니 초기화</button>
+                  </form> 
+                </div>
               </div>
-              </form>
-                <form action="checkout.php" method="post">
-                  <button type="submit" class="btn btn-outline-success">결재하기</button>
+              <br>
+              <div>
                 </form>
+                  <form action="checkout.php" method="post">
+                    <button type="submit" class="btn btn-outline-success">결재하기</button>
+                  </form>
+                </div>
             </div>
           </div>
           <!-- 계산서 끝 -->

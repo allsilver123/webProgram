@@ -21,3 +21,15 @@ CREATE TABLE orders (
   productQuantityList VARCHAR(200) NOT NULL,
   totalPrice INT NOT NULL
 );
+
+INSERT INTO product (name, price, description, calorie, carbohydrate, protein, fat)
+VALUES ("닭가슴살만두", 9990, "닭가슴살 만두는 신선하고 고품질의 닭가슴살을 사용하여 만든 건강하고 맛있는 만두입니다. 
+        이 만두는 고기의 풍미와 함께 건강한 식사를 선호하는 분들을 위해 특별히 개발되었습니다.", 175, 20, 10, 6);
+
+INSERT INTO product (name, price, description, calorie, carbohydrate, protein, fat)
+VALUES ("저칼로리 아이스크림", 12990, "저칼로리 아이스크림은 건강을 중시하는 분들을 위해 개발된 맛있고 가벼운 아이스크림 제품입니다. 
+이 아이스크림은 적은 칼로리 함량과 함께 진정한 아이스크림의 맛과 풍미를 즐길 수 있도록 고안되었습니다.", 75, 13, 4, 2);
+
+INSERT INTO product (name, price, description, calorie, carbohydrate, protein, fat)
+VALUES ("토마토 파스타", 4990, "토마토 파스타는 신선한 토마토와 풍부한 재료로 만들어진 맛있는 이탈리안 스타일의 파스타 제품입니다. 
+이 파스타는 진한 토마토 소스와 함께 고소하고 신선한 맛을 제공하여 파스타를 좋아하는 사람들에게 최적의 선택입니다.", 107, 19.63, 3.7, 1.85);

@@ -49,8 +49,8 @@
     </div>
     <!--PreLoader Ends-->
 
-    <!-- header -->
-    <div class="top-header-area" id="sticker">
+        <!-- header -->
+        <div class="top-header-area" id="sticker">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 col-sm-12 text-center">
@@ -85,7 +85,7 @@
                     if(isset($accountId)) {
                       echo '
                         <li>
-                          <a href="#">마이페이지</a>
+                        <a href="myPage.php">마이페이지</a>
                           <ul class="sub-menu">
                             <li><a href="logout.php">로그아웃</a></li>
                           </ul>

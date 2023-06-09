@@ -25,10 +25,11 @@ while ($row = mysqli_fetch_assoc($result)) {
   $product_name = $row["name"];
   $price = $row["price"];
   $calories = $row["calorie"];
-
+  $filter = $row["filter"];
+  
   // 제품 정보를 HTML로 출력
   echo '
-  <div class="col-lg-4 col-md-6 text-center 카테고리">
+  <div class="col-lg-4 col-md-6 text-center '.$filter.'">
     <div class="single-product-item">
       <div class="product-image">
         <a href="productDetail.php?id='.$id.'"

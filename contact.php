@@ -49,8 +49,8 @@
     </div>
     <!--PreLoader Ends-->
 
-    <!-- header -->
-    <div class="top-header-area" id="sticker">
+        <!-- header -->
+        <div class="top-header-area" id="sticker">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 col-sm-12 text-center">
@@ -85,7 +85,7 @@
                     if(isset($accountId)) {
                       echo '
                         <li>
-                          <a href="#">마이페이지</a>
+                          <a href="myPage.php">마이페이지</a>
                           <ul class="sub-menu">
                             <li><a href="logout.php">로그아웃</a></li>
                           </ul>
@@ -148,9 +148,8 @@
             <div id="form_status"></div>
             <div class="contact-form">
               <form
-                type="POST"
-                id="fruitkha-contact"
-                onSubmit="return valid_datas( this );"
+                method="POST"
+                action="contactSend.php"
               >
                 <p>
                   <input type="text" placeholder="이름" name="name" id="name" />
@@ -184,8 +183,7 @@
                     placeholder="내용을 적어주세요"
                   ></textarea>
                 </p>
-                <input type="hidden" name="token" value="FsWga4&@f6aw" />
-                <p><input type="submit" value="전송" /></p>
+                <button type="submit" class="btn btn-success">전송</button>
               </form>
             </div>
           </div>

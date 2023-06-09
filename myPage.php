@@ -1,3 +1,21 @@
+<?php
+session_start();
+$accountId = $_SESSION['accountId'];
+
+if(!isset($accountId)) {
+  echo '<script>alert("로그인 해주세요!")</script>';
+  echo '<script>window.location="login.php"</script>';
+}
+
+$servername = "20.244.1.134:3306"; // 데이터베이스 서버 이름
+$username = "test"; // 데이터베이스 사용자 이름
+$password = "2007"; // 데이터베이스 비밀번호
+$dbname = "CalorieWise"; // 데이터베이스 이름
+
+// 데이터베이스에 연결
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,7 +28,7 @@
     />
 
     <!-- title -->
-    <title>프로모션</title>
+    <title>Check Out</title>
 
     <!-- favicon -->
     <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png" />
@@ -49,8 +67,8 @@
     </div>
     <!--PreLoader Ends-->
 
-        <!-- header -->
-        <div class="top-header-area" id="sticker">
+    <!-- header -->
+    <div class="top-header-area" id="sticker">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 col-sm-12 text-center">
@@ -85,7 +103,7 @@
                     if(isset($accountId)) {
                       echo '
                         <li>
-                        <a href="myPage.php">마이페이지</a>
+                          <a href="myPage.php">마이페이지</a>
                           <ul class="sub-menu">
                             <li><a href="logout.php">로그아웃</a></li>
                           </ul>
@@ -127,8 +145,8 @@
         <div class="row">
           <div class="col-lg-8 offset-lg-2 text-center">
             <div class="breadcrumb-text">
-              <p>합리적인 가격으로</p>
-              <h1>프로모션</h1>
+              <p>칼로리와이즈</p>
+              <h1>마이 페이지</h1>
             </div>
           </div>
         </div>
@@ -136,161 +154,98 @@
     </div>
     <!-- end breadcrumb section -->
 
-    <!-- latest news -->
-    <div class="latest-news mt-150 mb-150">
+    <!-- check out section -->
+    <div class="cart-section mt-150 mb-150">
       <div class="container">
         <div class="row">
-          <div class="col-lg-4 col-md-6">
-            <div class="single-latest-news">
-              <a href="single-promotion.php"
-                ><div class="latest-news-bg news-bg-1 "></div
-              ></a>
-              <div class="news-text-box">
-                <h3>
-                  <a href="single-promotion.php">플레인 베이글 할인</a>
-                </h3>
-                <p class="blog-meta">
-                  <span class="date"
-                    ><i class="fas fa-calendar"></i>6월 3일 ~ 6월 15일</span
-                  >
-                </p>
-                <p class="excerpt">
-                  순수한 맛의 플레인 베이글, 오리지널 풍미를 즐겨보세요!
-                </p>
-                <a href="single-promotion.php" class="read-more-btn"
-                  >더 알아보기 <i class="fas fa-angle-right"></i
-                ></a>
-              </div>
+          <div class="col-lg-8 col-md-12">
+            <div class="cart-table-wrap">
+              <table class="cart-table">
+              <thead class="cart-table-head">
+                  <tr class="table-head-row">
+                    <th class="product-image">주문 번호</th>
+                    <th class="product-name">이름</th>
+                    <th class="product-price">배송 주소</th>
+                    <th class="product-quantity">전화 번호</th>
+                    <th class="product-total">요청 사항</th>
+                    <th class="product-total">결재 금액</th>
+                  </tr>
+          </thead>
+          <tbody>
+            <?php
+              $sql = "SELECT * FROM orders WHERE accountId = $accountId";
+              $result = mysqli_query($conn, $sql);
+         
+              if ($result->num_rows > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                      $id = $row["id"];
+                      $orderName = $row["orderName"];
+                      $deliveryAddress = $row["deliveryAddress"];
+                      $orderTel = $row["orderTel"];
+                      $orderText = $row["orderText"];
+                      $totalPrice = $row["totalPrice"];
+
+                      echo '
+                      <tr class="table-body-row">
+
+                        <td class="product-image">'.$id.'</td>
+                        <td class="product-name">'.$orderName.'</td>
+                        <td class="product-price">'.$deliveryAddress.'</td>
+                        <td class="product-total">'.$orderTel.'</td>
+                        <td class="product-total">'.$orderText.'</td>
+                        <td class="product-total">'.$totalPrice.'원</td>
+                      </tr>';
+                }
+              }
+              ?>
+              
+              </tbody>
+              </table>
+          </div>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="single-latest-news">
-              <a href="single-promotion.php"
-                ><div class="latest-news-bg news-bg-2" style="
-                    background-image: url('assets/img/products/신라면 건면.jpg');
-                  "></div
-              ></a>
-              <div class="news-text-box">
-                <h3>
-                  <a href="single-promotion.php">건면 할인전</a>
-                </h3>
-                <p class="blog-meta">
-                  <span class="date"
-                    ><i class="fas fa-calendar"></i> 6월 4일 ~ 6월 11일</span
-                  >
-                </p>
-                <p class="excerpt">
-                  면발을 튀기지 않고 기름에 튀기지 않고 열풍으로 자연건조시킨
-                  건강하게!
-                </p>
-                <a href="single-promotion.php" class="read-more-btn"
-                  >더 알아보기 <i class="fas fa-angle-right"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="single-latest-news">
-              <a href="single-promotion.php"
-                ><div
-                  class="latest-news-bg news-bg-3"
-                ></div>
-              </a>
-              <div class="news-text-box">
-                <h3>
-                  <a href="single-promotion.php">제로 음료수 할인</a>
-                </h3>
-                <p class="blog-meta">
-                  <span class="date"
-                    ><i class="fas fa-calendar"></i> 6월 10일 ~ 6월 24일</span
-                  >
-                </p>
-                <p class="excerpt">
-                  달달하게 땅길때는?<br />
-                  0칼로리로 부담없이
-                </p>
-                <a href="single-promotion.php" class="read-more-btn"
-                  >더 알아보기<i class="fas fa-angle-right"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="single-latest-news">
-              <a href="single-promotion.php"
-                ><div class="latest-news-bg news-bg-4"></div
-              ></a>
-              <div class="news-text-box">
-                <h3>
-                  <a href="single-promotion.php">냉동식품 모음전</a>
-                </h3>
-                <p class="blog-meta">
-                  <span class="author"><i class="fas fa-user"></i> Admin</span>
-                  <span class="date"
-                    ><i class="fas fa-calendar"></i> 27 December, 2019</span
-                  >
-                </p>
-                <p class="excerpt">쉽고 간편하게! <br />하지만 건강하기까지? 가성비 넘치고 맛있는 다양한 냉동식품 모음전</p>
-                <a href="single-promotion.php" class="read-more-btn"
-                  >더 알아보기 <i class="fas fa-angle-right"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="single-latest-news">
-              <a href="single-promotion.php"
-                ><div class="latest-news-bg news-bg-5"></div
-              ></a>
-              <div class="news-text-box">
-                <h3>
-                  <a href="single-promotion.php">아이스크림이 당기시나요?</a>
-                </h3>
-                <p class="blog-meta">
-                  <span class="author"><i class="fas fa-user"></i> Admin</span>
-                  <span class="date"
-                    ><i class="fas fa-calendar"></i> 27 December, 2019</span
-                  >
-                </p>
-                <p class="excerpt">
-                  설탕대신 감미료로 아이스크림을 건강하게 드셔보세요 달달하고 시원한 맛은 그대로 칼로리는 훨~씬 낮게
-                </p>
-                <a href="single-promotion.php" class="read-more-btn"
-                  >더 알아보기 <i class="fas fa-angle-right"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="single-latest-news">
-              <a href="single-promotion.php"
-                ><div class="latest-news-bg news-bg-6"></div
-              ></a>
-              <div class="news-text-box">
-                <h3>
-                  <a href="single-promotion.php">토마토 파스타 도전?</a>
-                </h3>
-                <p class="blog-meta">
-                  <span class="author"><i class="fas fa-user"></i> Admin</span>
-                  <span class="date"
-                    ><i class="fas fa-calendar"></i> 27 December, 2018</span
-                  >
-                </p>
-                <p class="excerpt">
-                  듀럼밀로 구성된 건강한 파스타면 
-                  게다가 슈퍼푸드 토마토소스로 건강한 한끼
-                  출시기념 15% 행사중
-                </p>
-                <a href="single-promotion.php" class="read-more-btn"
-                  >더 알아보기 <i class="fas fa-angle-right"></i
-                ></a>
-              </div>
-            </div>
-          </div>
+          <br>
+          <form method="post" action="myPage.php">
+            키
+            <input type="number" name="tall">
+            몸무게
+            <input type="number" name="weight">
+            나이
+            <input type="number" name="age">
+            <label>
+              <input type="radio" name="gender" value="male">
+              남자
+            </label>
+
+            <label>
+              <input type="radio" name="gender" value="female">
+              여자
+            </label>
+            <input type="submit" name="calculate">
+          </form>
+          <h3>
+          <?php
+            if(isset($_POST['calculate'])) {
+              $gender = $_POST['gender'];
+
+              $tall = $_POST['tall'];
+              $weight = $_POST['weight'];
+              $age = $_POST['age'];
+              if($gender=='male') {
+                $mustEat = 66 + (13.7 *$weight) + (5 * $tall) - (6.8 * $age);
+              } else {
+                $mustEat = 655 + (9.6 * $weight) + (1.8 * $tall) - (4.7 * $age);
+              }
+                echo '당신의 기초 대사량은'.$mustEat.'칼로리 입니다!';
+            }
+          ?>
+          </h3>
         </div>
+
       </div>
+
     </div>
-    <!-- end latest news -->
+    <!-- end check out section -->
 
     <!-- footer -->
     <div class="footer-area">
